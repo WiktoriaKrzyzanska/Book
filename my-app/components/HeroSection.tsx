@@ -7,13 +7,13 @@ import { CursorVariant } from '../lib/bookTypes';
 
 type HeroSectionProps = {
   y: MotionValue<number>;
-  onOpenModal: () => void;
+  onGoToTickets: () => void;
   setCursorVariant: (variant: CursorVariant) => void;
 };
 
 const HeroSection: React.FC<HeroSectionProps> = ({
   y,
-  onOpenModal,
+  onGoToTickets,
   setCursorVariant,
 }) => {
   return (
@@ -155,7 +155,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           }}
         >
           <button
-            onClick={onOpenModal}
+            onClick={onGoToTickets}
             onMouseEnter={() => setCursorVariant('hover')}
             onMouseLeave={() => setCursorVariant('default')}
             style={{

@@ -8,7 +8,6 @@ import CustomCursor from './CustomCursor';
 import HeroSection from './HeroSection';
 import VibeCarousel from './VibeCarousel';
 import BookSection from './BookSection';
-import RegisterModal from './RegisterModal';
 import ScrollToTopButton from './ScrollToTopButton';
 
 import { BookData, CursorVariant } from '../lib/bookTypes';
@@ -24,8 +23,7 @@ import HallOfFame from './HallOfFame';
 import Footer from './Footer';
 import ProfileSection from './ProfileSection';
 import CookiesSommelier from './CookiesSommelier';
-
-
+import TicketTailorSection from './TicketTailorSelection';
 
 const stylesCSS = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
@@ -79,7 +77,6 @@ const HomeClient: React.FC = () => {
 
   const [cursorVariant, setCursorVariant] =
     useState<CursorVariant>('default');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [book, setBook] = useState<BookData>(BOOK_FALLBACK);
   const [loading, setLoading] = useState(true);
 
@@ -120,6 +117,13 @@ const HomeClient: React.FC = () => {
     fetchBook();
   }, []);
 
+  const handleScrollToTickets = () => {
+    const el = document.getElementById('rejestracja');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: stylesCSS }} />
@@ -140,7 +144,7 @@ const HomeClient: React.FC = () => {
       >
         <HeroSection
           y={y}
-          onOpenModal={() => setIsModalOpen(true)}
+          onGoToTickets={handleScrollToTickets}
           setCursorVariant={setCursorVariant}
         />
 
@@ -149,26 +153,23 @@ const HomeClient: React.FC = () => {
         <BookSection
           book={book}
           loading={loading}
-          setCursorVariant={setCursorVariant}
-          onOpenModal={() => setIsModalOpen(true)}
+          setCursorVariant={setCursorVariant} onOpenModal={function (): void {
+            throw new Error('Function not implemented.');
+          } }      
         />
+
         <HowItWorks />
-        <HallOfFame/>
-                <EventShowcase />
-                <ProfileSection />
-                <CookiesSommelier/>
-              
-        <Footer/>
+
+        <TicketTailorSection setCursorVariant={setCursorVariant} />
+
+        <HallOfFame />
+        <EventShowcase />
+        <ProfileSection />
+        <CookiesSommelier />
+        <Footer />
       </div>
-
-      <RegisterModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-
-  
-        <CookieSommelier />
-            <ScrollToTopButton setCursorVariant={setCursorVariant} />
+      <CookieSommelier />
+      <ScrollToTopButton setCursorVariant={setCursorVariant} />
     </>
   );
 };
