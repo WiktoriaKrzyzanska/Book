@@ -1,0 +1,313 @@
+.section {
+  padding: 6rem 0;
+  background: radial-gradient(circle at top, #5b261c 0, #3d1a14 45%, #1a0a07 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.headerContainer {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 0 1rem;
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: #f5f0e6; 
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+.description {
+  color: rgba(248, 244, 237, 0.8); 
+  max-width: 32rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.marqueeWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 0;
+}
+
+.marqueeTrackContainer {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.gradientLeft,
+.gradientRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .gradientLeft,
+  .gradientRight {
+    width: 8rem;
+  }
+}
+
+.gradientLeft {
+  left: 0;
+  background: linear-gradient(to right, #3d1a14 0%, rgba(61, 26, 20, 0) 100%);
+}
+
+.gradientRight {
+  right: 0;
+  background: linear-gradient(to left, #3d1a14 0%, rgba(61, 26, 20, 0) 100%);
+}
+
+.marqueeContent {
+  display: flex;
+  gap: 1.5rem;
+  min-width: 100%;
+  padding: 0.5rem 0;
+}
+
+.card {
+  position: relative;
+  width: 16rem;
+  height: 20rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35); 
+  filter: grayscale(30%) sepia(10%);
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 20rem;
+    height: 24rem;
+  }
+}
+
+.cardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.grainSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 10;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 1rem;
+  z-index: 20;
+}
+
+.card:hover .cardOverlay {
+  opacity: 1;
+}
+
+.cardDate {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-family: serif;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.modalCard {
+  background-color: #f4f1ea;
+  width: 100%;
+  max-width: 32rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  cursor: default;
+}
+
+.modalImageContainer {
+  height: 16rem;
+  position: relative;
+}
+
+.modalImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modalGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem;
+  border-radius: 9999px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.closeButton:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.modalHeaderInfo {
+  position: absolute;
+  bottom: 1rem;
+  left: 1.5rem;
+  color: white;
+}
+
+.modalDate {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.modalTitle {
+  font-size: 1.875rem;
+  font-family: serif;
+  line-height: 1.2;
+}
+
+.modalAuthor {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  font-style: italic;
+}
+
+.modalContent {
+  padding: 2rem;
+}
+
+.ratingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.ratingLabel {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.quote {
+  font-size: 1.25rem;
+  font-family: serif;
+  color: #2c2c2c;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  border-left: 4px solid #5e1c1c;
+  padding-left: 1rem;
+}
+
+.instaLink {
+  display: block;
+  text-align: right;
+  font-size: 0.875rem;
+  color: #5e1c1c;
+  font-weight: 600;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.instaLink:hover {
+  text-decoration: underline;
+}
+
+.ratingContainer {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.starWrapper {
+  position: relative;
+}
+
+.starEmpty {
+  color: #d1d5db;
+}
+
+.starFull {
+  color: #5e1c1c;
+  fill: #5e1c1c;
+}
+
+.starHalfContainer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width: 50%;
+}

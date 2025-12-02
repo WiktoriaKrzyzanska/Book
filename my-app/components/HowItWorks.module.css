@@ -1,0 +1,254 @@
+.section {
+  position: relative;
+  padding: 6rem 1.5rem;
+  background-color: #ecebec; 
+  overflow: hidden;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.title {
+  font-family: serif;
+  font-size: 2rem;
+  color: #2c2c2c;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+}
+
+.italic {
+  font-style: italic;
+  color: #5e1c1c;
+  opacity: 0.8;
+}
+
+.description {
+  color: #4b5563;
+  max-width: 28rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.timelineWrapper {
+  position: relative;
+}
+
+.trackLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: transparent;
+  border-left: 2px dashed #d1d5db;
+  z-index: 0;
+  
+  left: 28px; 
+  transform: translateX(-50%);
+}
+
+.progressLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #5e1c1c;
+  z-index: 0;
+  transform-origin: top;
+  
+  left: 28px;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 768px) {
+  .trackLine, .progressLine {
+    left: 50%;
+  }
+}
+
+.stepsContainer {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+@media (min-width: 768px) {
+  .stepsContainer {
+    gap: 6rem;
+  }
+}
+
+.stepRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .stepRow {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+  }
+
+  .stepRowReverse {
+    flex-direction: row-reverse;
+  }
+}
+
+.stepContent {
+  padding-left: 4rem; 
+}
+
+@media (min-width: 768px) {
+  .stepContent {
+    width: 50%;
+    padding-left: 0;
+  }
+
+  .stepRow .stepContent:first-child {
+    padding-right: 3rem;
+    text-align: right;
+  }
+
+  .stepRowReverse .stepContent:first-child {
+    padding-left: 3rem;
+    text-align: left;
+  }
+}
+
+.stepTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 0.5rem;
+}
+
+.stepDesc {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.iconWrapper {
+  position: absolute;
+  left: 0;
+  width: 56px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .iconWrapper {
+    position: relative;
+    left: auto;
+    width: auto;
+    flex-shrink: 0;
+  }
+}
+
+.iconCircle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #f4f1ea;
+  border: 2px solid #5e1c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5e1c1c;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.spacer {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .spacer {
+    display: block;
+    width: 50%;
+  }
+}
+
+.waitlistWrapper {
+  margin-top: 5rem;
+  position: relative;
+  z-index: 20;
+}
+
+.waitlistCard {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(94, 28, 28, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .waitlistCard {
+    flex-direction: row;
+    padding: 2rem;
+  }
+}
+
+.bellIconBox {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: #ffedd5;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.waitlistContent {
+  flex: 1;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .waitlistContent {
+    text-align: left;
+  }
+}
+
+.waitlistTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 0.25rem;
+}
+
+.waitlistText {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.highlight {
+  font-weight: 600;
+  color: #5e1c1c;
+}

@@ -1,0 +1,255 @@
+.sommelier-section {
+  background-color: #3d1a14;
+  color: #f5f1e9;
+  padding: 5rem 1.5rem 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.sommelier-section--hovered {
+  background-color: #33140f;
+  transition: background-color 220ms ease-out;
+}
+
+.sommelier-inner {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.sommelier-header {
+  margin-bottom: 3.5rem;
+}
+
+.sommelier-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.75rem;
+}
+
+.sommelier-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Główna scena z butelką 3D */
+
+.sommelier-stage {
+  position: relative;
+  min-height: 340px;
+  margin: 0 auto 2.5rem;
+  border-radius: 24px;
+  padding: 3.2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    circle at top,
+    #5b2620 0%,
+    #2a0e0a 55%,
+    #1b0907 100%
+  );
+  overflow: hidden;
+}
+
+/* Canvas 3D */
+
+.sommelier-3d-container {
+  width: 260px;
+  height: 320px;
+}
+
+.sommelier-3d-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Karta – glassmorphism */
+
+.sommelier-card {
+  position: absolute;
+  right: 3rem;
+  bottom: 2.3rem;
+  width: 240px;
+  padding: 1.4rem 1.6rem;
+  border-radius: 18px;
+  background: rgba(15, 7, 5, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  color: #f5f1e9;
+  opacity: 0;
+  transform: translate3d(0, 14px, 20px);
+  transition: opacity 200ms ease-out, transform 220ms ease-out;
+}
+
+.sommelier-card--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 20px);
+}
+
+.sommelier-card-tagline {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.45rem;
+}
+
+.sommelier-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  margin: 0 0 0.35rem;
+}
+
+.sommelier-card-description {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Latające słowa – outline */
+
+.sommelier-floating-word {
+  position: absolute;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.16);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  opacity: 0.5;
+}
+
+.sommelier-floating-word--cherry {
+  top: 10%;
+  left: -10%;
+  animation: sommelier-drift-right 24s linear infinite;
+}
+
+.sommelier-floating-word--oak {
+  bottom: 12%;
+  right: -20%;
+  animation: sommelier-drift-left 30s linear infinite;
+}
+
+.sommelier-floating-word--chocolate {
+  top: 50%;
+  left: 60%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  animation: sommelier-drift-up 26s ease-in-out infinite;
+}
+
+.sommelier-floating-word--poland {
+  top: -6%;
+  right: 8%;
+  font-size: 2.6rem;
+  animation: sommelier-drift-down 32s ease-in-out infinite;
+}
+
+@keyframes sommelier-drift-right {
+  0% {
+    transform: translateX(-10%);
+  }
+  50% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(-10%);
+  }
+}
+
+@keyframes sommelier-drift-left {
+  0% {
+    transform: translateX(12%);
+  }
+  50% {
+    transform: translateX(-12%);
+  }
+  100% {
+    transform: translateX(12%);
+  }
+}
+
+@keyframes sommelier-drift-up {
+  0% {
+    transform: translateY(-40%);
+  }
+  50% {
+    transform: translateY(-60%);
+  }
+  100% {
+    transform: translateY(-40%);
+  }
+}
+
+@keyframes sommelier-drift-down {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(12%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+/* Disclaimer */
+
+.sommelier-disclaimer {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+/* RESPONSYWNOŚĆ */
+
+@media (max-width: 768px) {
+  .sommelier-section {
+    padding-inline: 1.25rem;
+  }
+
+  .sommelier-stage {
+    flex-direction: column;
+    padding: 2.5rem 1.5rem 2.2rem;
+    min-height: 360px;
+  }
+
+  .sommelier-3d-container {
+    width: 210px;
+    height: 260px;
+  }
+
+  .sommelier-card {
+    position: static;
+    width: 100%;
+    max-width: 340px;
+    margin-top: 1.4rem;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .sommelier-floating-word {
+    opacity: 0.22;
+    font-size: 2.2rem;
+  }
+
+  .sommelier-floating-word--cherry {
+    left: -20%;
+  }
+
+  .sommelier-floating-word--oak {
+    right: -30%;
+  }
+}

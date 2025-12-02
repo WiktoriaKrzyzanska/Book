@@ -1,0 +1,289 @@
+.ticketContainer {
+  width: 100%;
+  max-width: 780px;
+  margin: 1.5rem auto;
+  position: relative;
+  background-color: #ecebec;
+  transition: transform 0.3s ease;
+}
+
+.ticketContainer:hover {
+  transform: translateY(-4px);
+}
+
+.ticket {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  color: #1a1a1a;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .ticket {
+    flex-direction: row;
+    min-height: 220px; 
+    align-items: stretch; 
+  }
+}
+
+.imageSection {
+  position: relative;
+  height: 200px; 
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .imageSection {
+    height: auto; 
+    width: 32%; 
+    min-width: 200px;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  transition: transform 0.7s ease;
+}
+
+.ticketContainer:hover .image {
+  transform: scale(1.05);
+}
+
+.noImage {
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.75rem;
+}
+.perforation {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .perforation {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 24px;
+    background: transparent;
+    position: relative;
+    z-index: 10;
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+
+  .holeTop {
+    width: 24px;
+    height: 24px;
+    background-color: #ecebec; 
+    border-radius: 50%;
+    margin-top: -12px;
+  }
+
+  .dashedLine {
+    flex: 1; 
+    width: 0;
+    border-left: 2px dashed #e5e7eb;
+    margin: 4px 0;
+  }
+
+  .holeBottom {
+    width: 24px;
+    height: 24px;
+    background-color: #ecebec;
+    border-radius: 50%;
+    margin-bottom: -12px;
+  }
+}
+
+.contentSection {
+  flex: 1;
+  padding: 1.5rem; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  min-width: 0; 
+}
+
+.headerRow {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.typeLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7f1d1d;
+  white-space: nowrap; 
+}
+
+.statusBadge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.statusLast { background-color: #ffedd5; color: #9a3412; }
+.statusSold { background-color: #f3f4f6; color: #6b7280; }
+
+.title {
+  font-family: serif;
+  font-size: 1.6rem; 
+  font-weight: 500;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.15;
+  color: #111;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.locationRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: auto; 
+  padding-top: 0.5rem;
+}
+
+.metaSection {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fcfcfc; 
+  border-top: 1px dashed #e5e7eb;
+}
+
+@media (min-width: 768px) {
+  .metaSection {
+    flex-direction: column;
+    justify-content: center;
+    border-top: none;
+    border-left: 1px dashed #e5e7eb;
+    min-width: 160px;
+    height: auto; 
+  }
+}
+
+.dateBlock {
+  text-align: center;
+}
+
+.weekday {
+  font-family: serif;
+  font-style: italic;
+  font-size: 1.125rem;
+  color: #9ca3af;
+}
+
+.day {
+  font-family: serif;
+  font-size: 3rem;
+  line-height: 1;
+  color: #111;
+  margin: 0.25rem 0;
+}
+
+.time {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+}
+
+.actionsBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .actionsBlock {
+    margin-top: 1.5rem;
+  }
+}
+
+.buttonPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.5rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  background-color: #5e1c1c;
+  color: white;
+  transition: background-color 0.2s;
+  min-width: 110px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.buttonPrimary:hover {
+  background-color: #4a1616;
+}
+
+.buttonDisabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.calendarBtn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.65rem;
+  color: #6b7280;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.calendarBtn:hover {
+  text-decoration: underline;
+  color: #111;
+}
