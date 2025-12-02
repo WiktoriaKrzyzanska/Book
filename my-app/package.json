@@ -2,11 +2,11 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
+   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "export": "next export",
+    "build:gh": "next build && next export"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

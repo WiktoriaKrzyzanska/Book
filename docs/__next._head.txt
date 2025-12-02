@@ -1,0 +1,8 @@
+1:"$Sreact.fragment"
+2:I[65759,["/Book/_next/static/chunks/eb71843e5fb1b384.js"],"ViewportBoundary"]
+4:I[65759,["/Book/_next/static/chunks/eb71843e5fb1b384.js"],"MetadataBoundary"]
+5:"$Sreact.suspense"
+7:I[7081,["/Book/_next/static/chunks/eb71843e5fb1b384.js"],"IconMark"]
+0:{"buildId":"622Egr05AX9Hmx7_j54oN","rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"loading":null,"isPartial":false}
+3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+6:[["$","title","0",{"children":"Czytam Między Winami"}],["$","meta","1",{"name":"description","content":"CMWBC"}],["$","link","2",{"rel":"icon","href":"/Book/favicon.ico?favicon.7b8e18cf.ico","sizes":"1179x1179","type":"image/x-icon"}],["$","$L7","3",{}]]
