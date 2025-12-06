@@ -1,16 +1,14 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Loader2, Trash2, Upload, Eye, Save, Lock } from 'lucide-react';
-// import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from 'firebase/firestore';
-// import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-// import { signInAnonymously, onAuthStateChanged, User } from 'firebase/auth';
-// import { db, storage, auth } from '@/lib/firebase';
+import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { signInWithEmailAndPassword, onAuthStateChanged, User, signOut } from 'firebase/auth';
+import { db, storage, auth } from '@/lib/firebase';
 import { parseImageText } from '@/lib/ocrHelper';
 import styles from './redakcja.module.css';
-
-const SECRET_CODE = NEXT_PUBLIC_ADMIN_PASSCODE; 
 
 interface EventFormData {
   title: string;
@@ -42,44 +40,33 @@ const INITIAL_FORM: EventFormData = {
   imageUrl: '',
 };
 
-const DEMO_EVENTS: EventItem[] = [
-  {
-    id: '1',
-    title: 'Spotkanie Testowe',
-    description: 'To jest przykładowe wydarzenie widoczne w trybie offline.',
-    dateDay: '15',
-    dateMonth: 'GRUDZIEŃ',
-    dateWeekday: 'PT',
-    time: '19:00',
-    ticketLink: '#',
-    type: 'open',
-    status: 'open',
-    imageUrl: '',
-  }
-];
-
 export default function RedakcjaPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [passcode, setPasscode] = useState('');
+  // Stan logowania
+  const [user, setUser] = useState<User | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState('');
-  
-  const [events, setEvents] = useState<EventItem[]>(DEMO_EVENTS); 
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
+  // Stan aplikacji
+  const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [processingOCR, setProcessingOCR] = useState(false);
   const [formData, setFormData] = useState<EventFormData>(INITIAL_FORM);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  
-  const [user, setUser] = useState<{uid: string} | null>(null);
 
-  React.useEffect(() => {
-    if (typeof window !== 'undefined' && sessionStorage.getItem('cmwbc_admin_auth') === 'true') {
-      setIsAuthenticated(true);
-      setUser({ uid: 'demo-user' }); 
-    }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setIsAuthLoading(false);
+      if (currentUser) {
+        fetchEvents();
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
-  /*
   const fetchEvents = async () => {
     try {
       const q = query(
@@ -92,18 +79,20 @@ export default function RedakcjaPage() {
       console.error("Błąd pobierania:", error);
     }
   };
-  */
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode === SECRET_CODE) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('cmwbc_admin_auth', 'true');
-      setUser({ uid: 'demo-user' });
-      // fetchEvents(); 
-    } else {
-      setAuthError('Nieprawidłowe hasło');
+    setAuthError('');
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err: unknown) { 
+      console.error(err);
+      setAuthError('Błąd logowania. Sprawdź e-mail i hasło.');
     }
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
   };
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
@@ -135,49 +124,53 @@ export default function RedakcjaPage() {
     if (!user) return;
     setLoading(true);
 
-    setTimeout(() => {
-        const newEvent: EventItem = {
-            ...formData,
-            id: Date.now().toString(),
-            imageUrl: imageFile ? URL.createObjectURL(imageFile) : ''
-        };
-        setEvents([newEvent, ...events]);
-        setFormData(INITIAL_FORM);
-        setImageFile(null);
-        alert('Dodano (Tryb Demo - bez zapisu do bazy)!');
-        setLoading(false);
-    }, 1000);
-
-    /*
     try {
       let imgUrl = formData.imageUrl;
+      
       if (imageFile) {
         setUploading(true);
-        const fileRef = ref(storage, `artifacts/cmwbc-app/public/events/${Date.now()}_${imageFile.name}`);
+        const fileRef = ref(storage, `events/${Date.now()}_${imageFile.name}`);
         await uploadBytes(fileRef, imageFile);
         imgUrl = await getDownloadURL(fileRef);
         setUploading(false);
       }
+
       await addDoc(collection(db, 'artifacts', 'cmwbc-app', 'public', 'data', 'events'), {
         ...formData,
         imageUrl: imgUrl,
         createdAt: serverTimestamp(),
         authorId: user.uid
       });
+
+      setFormData(INITIAL_FORM);
+      setImageFile(null);
+      alert('Wydarzenie dodane pomyślnie!');
       fetchEvents();
-    } catch (e) { ... }
-    */
+    } catch (e) {
+      console.error("Błąd zapisu:", e);
+      alert('Wystąpił błąd podczas zapisywania.');
+    } finally {
+      setLoading(false);
+      setUploading(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Na pewno usunąć?')) return;
-    setEvents(events.filter(ev => ev.id !== id));
-    
-    // await deleteDoc(doc(db, 'artifacts', 'cmwbc-app', 'public', 'data', 'events', id));
-    // fetchEvents();
+    if (!confirm('Na pewno usunąć to wydarzenie?')) return;
+    try {
+      await deleteDoc(doc(db, 'artifacts', 'cmwbc-app', 'public', 'data', 'events', id));
+      setEvents(events.filter(ev => ev.id !== id));
+    } catch (e) {
+      console.error("Błąd usuwania:", e);
+      alert("Nie udało się usunąć.");
+    }
   };
 
-  if (!isAuthenticated) {
+  if (isAuthLoading) {
+    return <div className={styles.loginWrapper}><Loader2 className="animate-spin" color="#e8e4dc" /></div>;
+  }
+
+  if (!user) {
     return (
       <div className={styles.loginWrapper}>
         <div className={styles.loginBox}>
@@ -185,14 +178,23 @@ export default function RedakcjaPage() {
             <Lock size={28} color="#5e1c1c" />
           </div>
           <h1 className={styles.headerTitle} style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>Redakcja CMWBC</h1>
-          <p className={styles.headerSubtitle} style={{ marginBottom: '2rem' }}>Panel zarządzania wydarzeniami</p>
+          <p className={styles.headerSubtitle} style={{ marginBottom: '2rem' }}>Zaloguj się kontem administratora</p>
           <form onSubmit={handleLogin}>
             <input 
-              type="password" 
-              value={passcode} 
-              onChange={e => setPasscode(e.target.value)}
+              type="email" 
+              value={email} 
+              onChange={e => setEmail(e.target.value)}
               className={styles.loginInput}
-              placeholder="Wpisz kod dostępu"
+              placeholder="E-mail"
+              required
+            />
+            <input 
+              type="password" 
+              value={password} 
+              onChange={e => setPassword(e.target.value)}
+              className={styles.loginInput}
+              placeholder="Hasło"
+              required
             />
             {authError && <p className={styles.errorMsg}>{authError}</p>}
             <button className={styles.submitBtn}>Zaloguj</button>
@@ -207,10 +209,10 @@ export default function RedakcjaPage() {
       <header className={styles.header}>
         <div>
           <h1 className={styles.headerTitle}>Panel Redakcyjny</h1>
-          <p className={styles.headerSubtitle}>Witaj w centrum dowodzenia (Tryb Demo).</p>
+          <p className={styles.headerSubtitle}>Zalogowano jako: {user.email}</p>
         </div>
         <button 
-          onClick={() => { setIsAuthenticated(false); sessionStorage.removeItem('cmwbc_admin_auth'); }}
+          onClick={handleLogout}
           className={styles.logoutBtn}
         >
           Wyloguj

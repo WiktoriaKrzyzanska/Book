@@ -24,6 +24,8 @@ import Footer from './Footer';
 import ProfileSection from './ProfileSection';
 import CookiesSommelier from './CookiesSommelier';
 import TicketTailorSection from './TicketTailorSelection';
+import RegisterModal from './RegisterModal'; 
+import AgeVerification from './AgeVerification';
 
 const stylesCSS = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
@@ -79,6 +81,8 @@ const HomeClient: React.FC = () => {
     useState<CursorVariant>('default');
   const [book, setBook] = useState<BookData>(BOOK_FALLBACK);
   const [loading, setLoading] = useState(true);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -127,8 +131,11 @@ const HomeClient: React.FC = () => {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: stylesCSS }} />
+       <AgeVerification />
       <GrainOverlay />
       <CustomCursor variant={cursorVariant} />
+      
+      <RegisterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <nav className="nav">
         <div className="nav-text">Est. 2024</div>
@@ -153,9 +160,8 @@ const HomeClient: React.FC = () => {
         <BookSection
           book={book}
           loading={loading}
-          setCursorVariant={setCursorVariant} onOpenModal={function (): void {
-            throw new Error('Function not implemented.');
-          } }      
+          setCursorVariant={setCursorVariant}
+          onOpenModal={() => setIsModalOpen(true)}
         />
 
         <HowItWorks />

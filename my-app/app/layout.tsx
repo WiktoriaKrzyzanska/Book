@@ -1,7 +1,9 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://cmwbc.pl'; 
+const SITE_DOMAIN = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'localhost:3000';
+const PROTOCOL = SITE_DOMAIN.includes('localhost') ? 'http' : 'https';
+const SITE_URL = `${PROTOCOL}://${SITE_DOMAIN}`;
 
 export const viewport: Viewport = {
   themeColor: '#3d1a14',
